@@ -52,10 +52,8 @@ def get_member(id):
 @app.route('/members', methods=['POST'])
 def create_member():
     member = request.json
-    print("added", member)
-    jackson_family.add_member(member)
-    if member is not None:
-        return "member created", 200
+    new_member = jackson_family.add_member(member) 
+    return jsonify(new_member), 200
 
 @app.route('/members/<int:id>', methods=['DELETE'])
 def delete_single_member(id):
@@ -63,7 +61,7 @@ def delete_single_member(id):
  
     if member:
         jackson_family.delete_member(id)
-        return jsonify({"message": f"Miembro borrado con exito: {member}"}), 200
+        return jsonify({"done": True}), 200
     else:
         return jsonify({"error": "Miembro no encontrado"}), 404
 
